@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useResumeStore } from "@/store/resumeStore";
 import { ModernTemplate } from "./templates/ModernTemplate";
 import { ClassicTemplate } from "./templates/ClassicTemplate";
@@ -21,6 +21,8 @@ const TEMPLATE_COMPONENTS = {
   creative: CreativeTemplate,
 } as const;
 
+const A4_WIDTH = 794;
+const A4_HEIGHT = 1123;
 const ZOOM_STEPS = [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0];
 const DEFAULT_ZOOM_INDEX = ZOOM_STEPS.length - 1;
 
@@ -29,7 +31,28 @@ export function ResumePreview() {
   const Template = TEMPLATE_COMPONENTS[formState.template] ?? ModernTemplate;
   const [zoomIndex, setZoomIndex] = useState(DEFAULT_ZOOM_INDEX);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
   const zoom = ZOOM_STEPS[zoomIndex];
+
+  // Measure the container so we can cap the scale on mobile
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setContainerWidth(entry.contentRect.width);
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // On mobile, if the scaled width exceeds the container, shrink to fit
+  const padding = 32; // px-4 = 16px each side
+  const availableWidth = containerWidth > 0 ? containerWidth - padding : 0;
+  const maxFitScale = availableWidth > 0 ? availableWidth / A4_WIDTH : 1;
+  const effectiveZoom = Math.min(zoom, maxFitScale);
 
   const handleZoomIn = () => {
     setZoomIndex((prev) => Math.min(prev + 1, ZOOM_STEPS.length - 1));
@@ -73,7 +96,7 @@ export function ResumePreview() {
         className="min-w-12 rounded px-1.5 py-0.5 text-center text-xs font-medium text-muted-foreground transition-colors hover:bg-muted"
         aria-label="Reset zoom"
       >
-        {Math.round(zoom * 100)}%
+        {Math.round(effectiveZoom * 100)}%
       </button>
       <Button
         variant="ghost"
@@ -88,21 +111,21 @@ export function ResumePreview() {
     </div>
   );
 
-  // Resume page content
+  // Resume page content — uses effectiveZoom to fit container
   const resumePage = (
     <div
       className="mx-auto origin-top"
       style={{
-        width: `${794 * zoom}px`,
-        height: `${1123 * zoom}px`,
+        width: `${A4_WIDTH * effectiveZoom}px`,
+        height: `${A4_HEIGHT * effectiveZoom}px`,
       }}
     >
       <div
         className="bg-white shadow-lg ring-1 ring-black/5"
         style={{
-          width: "794px",
-          minHeight: "1123px",
-          transform: `scale(${zoom})`,
+          width: `${A4_WIDTH}px`,
+          minHeight: `${A4_HEIGHT}px`,
+          transform: `scale(${effectiveZoom})`,
           transformOrigin: "top left",
         }}
         id="resume-preview"
@@ -118,7 +141,6 @@ export function ResumePreview() {
   if (isFullscreen) {
     return (
       <>
-        {/* Placeholder in the normal flow so the layout doesn't collapse */}
         <div className="flex h-full flex-col items-center justify-center bg-muted/30">
           <p className="text-sm text-muted-foreground">
             Preview is in fullscreen mode
@@ -133,9 +155,7 @@ export function ResumePreview() {
           </Button>
         </div>
 
-        {/* Fullscreen overlay */}
         <div className="fixed inset-0 z-50 flex flex-col bg-background">
-          {/* Fullscreen toolbar */}
           <div className="flex shrink-0 items-center justify-between border-b px-4 py-2">
             <h3 className="text-sm font-semibold">Live Preview</h3>
             <div className="flex items-center gap-1">
@@ -152,14 +172,10 @@ export function ResumePreview() {
               </Button>
             </div>
           </div>
-
-          {/* Page indicator */}
           <div className="shrink-0 px-4 py-1.5">
             <span className="text-xs text-muted-foreground">Page 1</span>
           </div>
-
-          {/* Scrollable fullscreen preview */}
-          <div className="flex-1 overflow-auto bg-muted/30 px-4 pb-8">
+          <div ref={containerRef} className="flex-1 overflow-auto bg-muted/30 px-4 pb-8">
             {resumePage}
           </div>
         </div>
@@ -169,8 +185,7 @@ export function ResumePreview() {
 
   return (
     <div className="flex h-full flex-col">
-      {/* Preview toolbar */}
-      <div className="flex shrink-0 items-center justify-between border-b bg-background px-4 py-2">
+      <div className="flex shrink-0 items-center justify-between border-b bg-background px-3 py-2 sm:px-4">
         <h3 className="text-sm font-semibold">Live Preview</h3>
         <div className="flex items-center gap-1">
           {zoomControls}
@@ -186,14 +201,12 @@ export function ResumePreview() {
           </Button>
         </div>
       </div>
-
-      {/* Page indicator */}
       <div className="shrink-0 px-4 py-1.5">
         <span className="text-xs text-muted-foreground">Page 1</span>
       </div>
-
-      {/* Scrollable preview area */}
-      <div className="flex-1 overflow-auto px-4 pb-8">{resumePage}</div>
+      <div ref={containerRef} className="flex-1 overflow-auto px-4 pb-8">
+        {resumePage}
+      </div>
     </div>
   );
 }

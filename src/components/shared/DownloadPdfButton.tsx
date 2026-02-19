@@ -67,7 +67,7 @@ export function DownloadPdfButton({
       ) : (
         <Download className="h-3.5 w-3.5" aria-hidden="true" />
       )}
-      {isGenerating ? "Generating..." : "Export PDF"}
+      <span className="hidden sm:inline">{isGenerating ? "Generating..." : "Export PDF"}</span>
     </Button>
   );
 }
