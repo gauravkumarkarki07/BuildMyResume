@@ -8,6 +8,7 @@ import type { ResumeFormState } from "@/store/resumeStore";
 import type { TemplateId } from "@/types";
 import type { Metadata } from "next";
 import { Download } from "lucide-react";
+import Link from "next/link";
 
 const TEMPLATE_COMPONENTS = {
   modern: ModernTemplate,
@@ -127,9 +128,9 @@ export default async function PublicResumePage({
         </div>
         <p className="mt-6 text-center text-xs text-muted-foreground">
           Built with{" "}
-          <a href="/" className="font-medium text-brand-600 hover:underline">
+          <Link href="/" className="font-medium text-brand-600 hover:underline">
             BuildMyResume
-          </a>
+          </Link>
         </p>
       </div>
 

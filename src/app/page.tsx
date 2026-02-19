@@ -36,8 +36,8 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         {/* Gradient background */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-brand-50 via-background to-background" />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_-20%,oklch(0.78_0.11_281_/_0.15),transparent)]" />
+        <div className="absolute inset-0 -z-10 bg-linear-to-b from-brand-50 via-background to-background" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_-20%,oklch(0.78_0.11_281/0.15),transparent)]" />
 
         <div className="mx-auto max-w-6xl px-4 pb-20 pt-24 text-center sm:pb-28 sm:pt-32">
           {/* Badge */}
@@ -48,8 +48,9 @@ export default async function HomePage() {
 
           <h1 className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
             Build a resume that
-            <span className="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">
-              {" "}gets you hired
+            <span className="bg-linear-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">
+              {" "}
+              gets you hired
             </span>
           </h1>
 
@@ -60,9 +61,7 @@ export default async function HomePage() {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Button size="lg" className="h-12 px-8 text-base" asChild>
-              <Link href="/sign-up">
-                Start Building — It&apos;s Free
-              </Link>
+              <Link href="/sign-up">Start Building — It&apos;s Free</Link>
             </Button>
             <Button
               size="lg"
@@ -215,7 +214,8 @@ export default async function HomePage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4">
           <Logo size="sm" />
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} BuildMyResume. All rights reserved.
+            &copy; {new Date().getFullYear()} BuildMyResume. All rights
+            reserved.
           </p>
         </div>
       </footer>

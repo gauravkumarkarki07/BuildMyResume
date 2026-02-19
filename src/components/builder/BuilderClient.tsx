@@ -11,7 +11,7 @@ import { ShareDialog } from "./ShareDialog";
 import type { ResumeWithRelations } from "@/types";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
-import { ArrowLeft, Save, Download, Share2 } from "lucide-react";
+import { Save, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/Logo";
 import { Separator } from "@/components/ui/separator";
