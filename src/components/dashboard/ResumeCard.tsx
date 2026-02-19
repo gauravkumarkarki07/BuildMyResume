@@ -3,7 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -74,7 +79,7 @@ export function ResumeCard({ resume }: { resume: ResumeWithPersonalInfo }) {
         <Button
           variant="default"
           size="sm"
-          className="flex-1"
+          className="flex-1 hover:cursor-pointer"
           onClick={() => router.push(`/builder/${resume.id}`)}
         >
           <Pencil className="mr-1.5 h-3 w-3" />
@@ -87,7 +92,7 @@ export function ResumeCard({ resume }: { resume: ResumeWithPersonalInfo }) {
               size="sm"
               disabled={isDeleting}
               aria-label="Delete resume"
-              className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+              className="text-destructive hover:bg-destructive/10 hover:text-destructive hover:cursor-pointer"
             >
               <Trash2 className="h-3 w-3" />
             </Button>

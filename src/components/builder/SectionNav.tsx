@@ -29,7 +29,10 @@ export function SectionNav({ className }: { className?: string }) {
   const setActiveSection = useResumeStore((s) => s.setActiveSection);
 
   return (
-    <nav className={cn("flex flex-col gap-1 p-2", className)} aria-label="Resume sections">
+    <nav
+      className={cn("flex items-center gap-1 overflow-x-auto", className)}
+      aria-label="Resume sections"
+    >
       {SECTIONS.map((section) => {
         const Icon = SECTION_ICONS[section.id];
         const isActive = activeSection === section.id;
@@ -39,14 +42,14 @@ export function SectionNav({ className }: { className?: string }) {
             onClick={() => setActiveSection(section.id)}
             aria-current={isActive ? "true" : undefined}
             className={cn(
-              "flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "inline-flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               isActive
-                ? "border-l-2 border-l-primary bg-primary/10 font-medium text-primary"
-                : "border-l-2 border-l-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
           >
-            <Icon className="h-4 w-4" />
-            {section.label}
+            <Icon className="h-3.5 w-3.5" />
+            {section.shortLabel}
           </button>
         );
       })}

@@ -25,7 +25,6 @@ export function SkillsSection() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Skills</h2>
       <div className="flex min-h-[40px] flex-wrap gap-2 rounded-md border p-2 focus-within:ring-2 focus-within:ring-ring">
         {skills.map((skill) => (
           <Badge key={skill.id} variant="secondary" className="gap-1">

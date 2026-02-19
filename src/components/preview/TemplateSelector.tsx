@@ -2,30 +2,36 @@
 
 import { useResumeStore } from "@/store/resumeStore";
 import { TEMPLATES } from "@/lib/constants";
-import { cn } from "@/lib/utils";
 import type { TemplateId } from "@/types";
+import { Palette } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function TemplateSelector() {
   const template = useResumeStore((s) => s.formState.template);
   const setTemplate = useResumeStore((s) => s.setTemplate);
 
   return (
-    <div className="flex flex-wrap gap-1.5">
-      {TEMPLATES.map((t) => (
-        <button
-          key={t.id}
-          onClick={() => setTemplate(t.id as TemplateId)}
-          title={t.description}
-          className={cn(
-            "rounded-md border px-2.5 py-1 text-xs font-medium transition-colors",
-            template === t.id
-              ? "border-primary bg-primary text-primary-foreground"
-              : "border-border bg-background text-muted-foreground hover:bg-muted"
-          )}
-        >
-          {t.label}
-        </button>
-      ))}
+    <div className="flex items-center gap-2">
+      <Palette className="h-4 w-4 text-muted-foreground" />
+      <span className="text-sm font-medium text-muted-foreground">Template</span>
+      <Select value={template} onValueChange={(v) => setTemplate(v as TemplateId)}>
+        <SelectTrigger className="h-8 w-[180px]">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {TEMPLATES.map((t) => (
+            <SelectItem key={t.id} value={t.id}>
+              {t.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }

@@ -1,22 +1,50 @@
 import type { ActiveSection, TemplateId } from "@/types";
 
-export const SECTIONS: { id: ActiveSection; label: string }[] = [
-  { id: "personal", label: "Personal Info" },
-  { id: "summary", label: "Summary" },
-  { id: "experience", label: "Work Experience" },
-  { id: "education", label: "Education" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "certifications", label: "Certifications" },
+export const SECTIONS: {
+  id: ActiveSection;
+  label: string;
+  shortLabel: string;
+}[] = [
+  { id: "personal", label: "Personal Info", shortLabel: "Basic" },
+  { id: "summary", label: "Summary", shortLabel: "Summary" },
+  { id: "experience", label: "Work Experience", shortLabel: "Work" },
+  { id: "education", label: "Education", shortLabel: "Education" },
+  { id: "skills", label: "Skills", shortLabel: "Skills" },
+  { id: "projects", label: "Projects", shortLabel: "Projects" },
+  { id: "certifications", label: "Certifications", shortLabel: "Certs" },
 ];
 
-export const TEMPLATES: { id: TemplateId; label: string; description: string }[] = [
-  { id: "modern", label: "Modern", description: "Bold header, colored accents" },
+export const TEMPLATES: {
+  id: TemplateId;
+  label: string;
+  description: string;
+}[] = [
+  {
+    id: "modern",
+    label: "Modern",
+    description: "Bold header, colored accents",
+  },
   { id: "classic", label: "Classic", description: "Traditional single-column" },
-  { id: "minimal", label: "Minimal", description: "Clean whitespace, subtle style" },
-  { id: "professional", label: "Professional", description: "ATS-optimized, no-frills" },
-  { id: "executive", label: "Executive", description: "Two-column sidebar layout" },
-  { id: "creative", label: "Creative", description: "Bold typography, warm accents" },
+  {
+    id: "minimal",
+    label: "Minimal",
+    description: "Clean whitespace, subtle style",
+  },
+  {
+    id: "professional",
+    label: "Professional",
+    description: "ATS-optimized, no-frills",
+  },
+  {
+    id: "executive",
+    label: "Executive",
+    description: "Two-column sidebar layout",
+  },
+  {
+    id: "creative",
+    label: "Creative",
+    description: "Bold typography, warm accents",
+  },
 ];
 
-export const AUTOSAVE_DELAY_MS = 1500;
+export const AUTOSAVE_DELAY_MS = 5000;

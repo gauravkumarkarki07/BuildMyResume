@@ -15,7 +15,6 @@ export function EducationSection() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Education</h2>
       <RepeaterField
         items={items}
         onAdd={add}

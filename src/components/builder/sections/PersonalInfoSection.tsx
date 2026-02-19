@@ -11,15 +11,30 @@ export function PersonalInfoSection() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Personal Info</h2>
+      <p className="text-sm text-muted-foreground">
+        Enter your basic contact information and professional summary.
+      </p>
       <div className="space-y-3">
+        {/* Full Name — full width */}
         <Field label="Full Name" value={personalInfo.fullName} onChange={(v) => update({ fullName: v })} placeholder="John Doe" />
-        <Field label="Email" value={personalInfo.email} onChange={(v) => update({ email: v })} placeholder="john@example.com" type="email" />
-        <Field label="Phone" value={personalInfo.phone} onChange={(v) => update({ phone: v })} placeholder="+1 555 000 0000" type="tel" />
-        <Field label="Location" value={personalInfo.location} onChange={(v) => update({ location: v })} placeholder="San Francisco, CA" />
-        <Field label="LinkedIn" value={personalInfo.linkedin ?? ""} onChange={(v) => update({ linkedin: v || null })} placeholder="https://linkedin.com/in/..." type="url" />
-        <Field label="GitHub" value={personalInfo.github ?? ""} onChange={(v) => update({ github: v || null })} placeholder="https://github.com/..." type="url" />
-        <Field label="Website" value={personalInfo.website ?? ""} onChange={(v) => update({ website: v || null })} placeholder="https://..." type="url" />
+
+        {/* Email & Phone — 2-column */}
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Email" value={personalInfo.email} onChange={(v) => update({ email: v })} placeholder="john@example.com" type="email" />
+          <Field label="Phone" value={personalInfo.phone} onChange={(v) => update({ phone: v })} placeholder="(555) 123-4567" type="tel" />
+        </div>
+
+        {/* Location — full width */}
+        <Field label="Address" value={personalInfo.location} onChange={(v) => update({ location: v })} placeholder="San Francisco, CA" />
+
+        {/* LinkedIn & Website — 2-column */}
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="LinkedIn (Optional)" value={personalInfo.linkedin ?? ""} onChange={(v) => update({ linkedin: v || null })} placeholder="linkedin.com/in/johndoe" type="url" />
+          <Field label="Website (Optional)" value={personalInfo.website ?? ""} onChange={(v) => update({ website: v || null })} placeholder="johndoe.com" type="url" />
+        </div>
+
+        {/* GitHub — full width */}
+        <Field label="GitHub (Optional)" value={personalInfo.github ?? ""} onChange={(v) => update({ github: v || null })} placeholder="github.com/johndoe" type="url" />
       </div>
     </div>
   );

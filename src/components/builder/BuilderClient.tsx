@@ -6,6 +6,7 @@ import { useAutoSave } from "@/hooks/useAutoSave";
 import { SectionNav } from "./SectionNav";
 import { BuilderSidebar } from "./BuilderSidebar";
 import { ResumePreview } from "@/components/preview/ResumePreview";
+import { TemplateSelector } from "@/components/preview/TemplateSelector";
 import { SaveStatusIndicator } from "./SaveStatusIndicator";
 import { ShareDialog } from "./ShareDialog";
 import { DownloadPdfButton } from "@/components/shared/DownloadPdfButton";
@@ -31,10 +32,10 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       {/* Top bar */}
-      <header className="flex h-14 items-center justify-between border-b bg-background px-4 shadow-sm">
+      <header className="flex h-14 shrink-0 items-center justify-between border-b bg-background px-4 shadow-sm">
         <div className="flex items-center gap-3">
           <Link href="/dashboard">
-            <Logo size="sm" iconOnly />
+            <Logo size="sm" />
           </Link>
           <Separator orientation="vertical" className="!h-6" />
           <ResumeTitle />
@@ -55,11 +56,37 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
           <UserButton afterSignOutUrl="/" />
         </div>
       </header>
-      {/* Main area */}
+
+      {/* Main area — two panel layout */}
       <div className="flex flex-1 overflow-hidden">
-        <SectionNav className="w-48 shrink-0 border-r" />
-        <BuilderSidebar className="w-[400px] shrink-0 overflow-y-auto border-r p-4" />
-        <div className="flex-1 overflow-y-auto bg-muted/30 p-6">
+        {/* Left panel — Form editor */}
+        <div className="flex w-1/2 shrink-0 flex-col border-r">
+          {/* Form panel header */}
+          <div className="shrink-0 border-b px-6 pb-4 pt-5">
+            <h2 className="text-xl font-bold tracking-tight">Build Your Resume</h2>
+            <p className="mt-0.5 text-sm text-muted-foreground">
+              Fill in your information below and see your resume update in real-time.
+            </p>
+
+            {/* Template selector */}
+            <div className="mt-4">
+              <TemplateSelector />
+            </div>
+
+            {/* Section tabs */}
+            <div className="mt-4">
+              <SectionNav />
+            </div>
+          </div>
+
+          {/* Scrollable form content */}
+          <div className="flex-1 overflow-y-auto">
+            <BuilderSidebar className="p-6" />
+          </div>
+        </div>
+
+        {/* Right panel — Live Preview */}
+        <div className="flex flex-1 flex-col bg-muted/30">
           <ResumePreview />
         </div>
       </div>
@@ -82,7 +109,7 @@ function ResumeTitle() {
     <input
       value={title}
       onChange={(e) => updateTitle(e.target.value)}
-      className="w-64 rounded border-none bg-transparent text-lg font-bold tracking-tight placeholder:text-muted-foreground/50 hover:border-b hover:border-muted-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="w-64 rounded border-none bg-transparent text-sm font-semibold tracking-tight placeholder:text-muted-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       placeholder="Resume title"
       aria-label="Resume title"
     />

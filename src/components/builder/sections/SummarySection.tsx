@@ -10,7 +10,9 @@ export function SummarySection() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Summary</h2>
+      <p className="text-sm text-muted-foreground">
+        Write a compelling summary of your professional background and key achievements.
+      </p>
       <div className="space-y-1">
         <Label className="text-xs">Professional Summary</Label>
         <Textarea

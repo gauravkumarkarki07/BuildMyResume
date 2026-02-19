@@ -15,7 +15,6 @@ export function WorkExperienceSection() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Work Experience</h2>
       <RepeaterField
         items={items}
         onAdd={add}
