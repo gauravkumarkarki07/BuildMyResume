@@ -12,11 +12,6 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-EXEC", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
   app:
     build:
@@ -38,7 +33,7 @@ services:
       NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
     depends_on:
       db:
-        condition: service_healthy
+        condition: service_started
 
 volumes:
   pgdata:

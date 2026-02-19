@@ -124,3 +124,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Print styles for public resume page */
+@media print {
+  .print\:hidden {
+    display: none !important;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}

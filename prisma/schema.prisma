@@ -23,8 +23,10 @@ model Resume {
   id        String   @id @default(cuid())
   userId    String
   title     String   @default("Untitled Resume")
+  slug      String   @unique @default(cuid())
   template  String   @default("modern")
   summary   String?  @db.Text
+  isPublic  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
