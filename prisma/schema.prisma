@@ -23,10 +23,8 @@ model Resume {
   id        String   @id @default(cuid())
   userId    String
   title     String   @default("Untitled Resume")
-  slug      String   @unique @default(cuid())
   template  String   @default("modern")
   summary   String?  @db.Text
-  isPublic  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -52,7 +50,7 @@ model PersonalInfo {
   github   String?
   website  String?
 
-  resume Resume @relation(fields: [resumeId], references: [id])
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 }
 
 model WorkExperience {
@@ -66,7 +64,7 @@ model WorkExperience {
   current     Boolean @default(false)
   description String  @default("") @db.Text
 
-  resume Resume @relation(fields: [resumeId], references: [id])
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@index([resumeId])
 }
@@ -84,7 +82,7 @@ model Education {
   gpa          String?
   description  String? @db.Text
 
-  resume Resume @relation(fields: [resumeId], references: [id])
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@index([resumeId])
 }
@@ -94,7 +92,7 @@ model Skill {
   resumeId String
   name     String
 
-  resume Resume @relation(fields: [resumeId], references: [id])
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@index([resumeId])
 }
@@ -108,7 +106,7 @@ model Project {
   startDate   String?
   endDate     String?
 
-  resume Resume @relation(fields: [resumeId], references: [id])
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@index([resumeId])
 }
@@ -122,7 +120,7 @@ model Certification {
   expiryDate     String?
   certificateUrl String?
 
-  resume Resume @relation(fields: [resumeId], references: [id])
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@index([resumeId])
 }

@@ -66,8 +66,6 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
       {/* Share dialog */}
       <ShareDialog
         resumeId={resume.id}
-        slug={resume.slug}
-        isPublic={resume.isPublic}
         open={shareOpen}
         onOpenChange={setShareOpen}
       />

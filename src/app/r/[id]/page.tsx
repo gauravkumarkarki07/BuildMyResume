@@ -15,9 +15,9 @@ const TEMPLATE_COMPONENTS = {
   minimal: MinimalTemplate,
 } as const;
 
-async function getPublicResume(slug: string) {
+async function getPublicResume(id: string) {
   const resume = await db.resume.findUnique({
-    where: { slug },
+    where: { id },
     include: {
       personalInfo: true,
       workExperiences: true,
@@ -28,17 +28,17 @@ async function getPublicResume(slug: string) {
     },
   });
 
-  if (!resume || !resume.isPublic) return null;
+  if (!resume) return null;
   return resume;
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const resume = await getPublicResume(slug);
+  const { id } = await params;
+  const resume = await getPublicResume(id);
 
   if (!resume) {
     return { title: "Resume Not Found" };
@@ -54,10 +54,10 @@ export async function generateMetadata({
 export default async function PublicResumePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ id: string }>;
 }) {
-  const { slug } = await params;
-  const resume = await getPublicResume(slug);
+  const { id } = await params;
+  const resume = await getPublicResume(id);
 
   if (!resume) notFound();
 

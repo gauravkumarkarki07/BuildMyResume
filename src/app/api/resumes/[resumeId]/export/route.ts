@@ -17,19 +17,17 @@ export async function POST(
 
   const resume = await db.resume.findUnique({
     where: { id: resumeId },
-    select: { id: true, userId: true, slug: true, isPublic: true },
+    select: { id: true, userId: true },
   });
 
   if (!resume || resume.userId !== user.id) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  // For now, return the public URL so the client can use print-to-PDF.
-  // Server-side Puppeteer generation can be added here later.
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
   return NextResponse.json({
     message: "Use client-side Export PDF button or print the public page.",
-    publicUrl: resume.isPublic ? `${appUrl}/r/${resume.slug}` : null,
+    publicUrl: `${appUrl}/r/${resume.id}`,
   });
 }
