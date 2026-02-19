@@ -190,7 +190,7 @@ export const useResumeStore = create<ResumeStore>()(
             endDate: null,
             current: false,
             description: "",
-            sortOrder: state.formState.workExperiences.length,
+
           });
           state.isDirty = true;
         }),
@@ -226,7 +226,7 @@ export const useResumeStore = create<ResumeStore>()(
             current: false,
             gpa: null,
             description: null,
-            sortOrder: state.formState.educations.length,
+
           });
           state.isDirty = true;
         }),
@@ -256,7 +256,7 @@ export const useResumeStore = create<ResumeStore>()(
               id: nanoid(),
               resumeId: state.formState.id ?? "",
               name: trimmed,
-              sortOrder: state.formState.skills.length,
+
             });
             state.isDirty = true;
           }
@@ -275,12 +275,9 @@ export const useResumeStore = create<ResumeStore>()(
             resumeId: state.formState.id ?? "",
             name: "",
             description: "",
-            technologies: [],
             url: null,
-            githubUrl: null,
             startDate: null,
             endDate: null,
-            sortOrder: state.formState.projects.length,
           });
           state.isDirty = true;
         }),
@@ -311,8 +308,7 @@ export const useResumeStore = create<ResumeStore>()(
             issuer: "",
             issueDate: "",
             expiryDate: null,
-            credentialUrl: null,
-            sortOrder: state.formState.certifications.length,
+            certificateUrl: null,
           });
           state.isDirty = true;
         }),

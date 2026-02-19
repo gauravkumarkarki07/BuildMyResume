@@ -19,7 +19,6 @@ export const workExperienceSchema = z.object({
   endDate: z.string().nullable(),
   current: z.boolean(),
   description: z.string().default(""),
-  sortOrder: z.number().default(0),
 });
 
 export const educationSchema = z.object({
@@ -33,25 +32,20 @@ export const educationSchema = z.object({
   current: z.boolean(),
   gpa: z.string().nullable(),
   description: z.string().nullable(),
-  sortOrder: z.number().default(0),
 });
 
 export const skillSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Skill name is required"),
-  sortOrder: z.number().default(0),
 });
 
 export const projectSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Project name is required"),
   description: z.string().default(""),
-  technologies: z.array(z.string()),
   url: z.string().url("Invalid URL").nullable().or(z.literal("")),
-  githubUrl: z.string().url("Invalid URL").nullable().or(z.literal("")),
   startDate: z.string().nullable(),
   endDate: z.string().nullable(),
-  sortOrder: z.number().default(0),
 });
 
 export const certificationSchema = z.object({
@@ -60,8 +54,7 @@ export const certificationSchema = z.object({
   issuer: z.string().min(1, "Issuer is required"),
   issueDate: z.string().min(1, "Issue date is required"),
   expiryDate: z.string().nullable(),
-  credentialUrl: z.string().url("Invalid URL").nullable().or(z.literal("")),
-  sortOrder: z.number().default(0),
+  certificateUrl: z.string().url("Invalid URL").nullable().or(z.literal("")),
 });
 
 export const resumeFormSchema = z.object({

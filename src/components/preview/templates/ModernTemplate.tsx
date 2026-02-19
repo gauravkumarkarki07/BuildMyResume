@@ -96,9 +96,7 @@ export function ModernTemplate({ data }: TemplateProps) {
             <div key={proj.id} className="mb-3">
               <h3 className="font-semibold">{proj.name}</h3>
               {proj.description && <p className="text-sm leading-relaxed">{proj.description}</p>}
-              {proj.technologies.length > 0 && (
-                <p className="mt-1 text-xs text-gray-500">{proj.technologies.join(" · ")}</p>
-              )}
+              {proj.url && <p className="mt-1 text-xs text-blue-500">{proj.url}</p>}
             </div>
           ))}
         </div>

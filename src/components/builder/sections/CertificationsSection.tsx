@@ -43,8 +43,8 @@ export function CertificationsSection() {
               </div>
             </div>
             <div className="space-y-1">
-              <Label className="text-xs">Credential URL</Label>
-              <Input value={item.credentialUrl ?? ""} onChange={(e) => update(item.id, { credentialUrl: e.target.value || null })} placeholder="https://..." />
+              <Label className="text-xs">Certificate URL</Label>
+              <Input value={item.certificateUrl ?? ""} onChange={(e) => update(item.id, { certificateUrl: e.target.value || null })} placeholder="https://..." />
             </div>
           </div>
         )}

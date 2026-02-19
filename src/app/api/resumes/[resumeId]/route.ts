@@ -8,11 +8,11 @@ async function getOwnedResume(resumeId: string, userId: string) {
     where: { id: resumeId },
     include: {
       personalInfo: true,
-      workExperiences: { orderBy: { sortOrder: "asc" } },
-      educations: { orderBy: { sortOrder: "asc" } },
-      skills: { orderBy: { sortOrder: "asc" } },
-      projects: { orderBy: { sortOrder: "asc" } },
-      certifications: { orderBy: { sortOrder: "asc" } },
+      workExperiences: true,
+      educations: true,
+      skills: true,
+      projects: true,
+      certifications: true,
     },
   });
   if (!resume || resume.userId !== userId) return null;
@@ -56,9 +56,7 @@ export async function PUT(
 
   const body: ResumeFormState = await req.json();
 
-  // Update resume + all relations in a transaction
   const updated = await db.$transaction(async (tx) => {
-    // Update resume top-level fields
     await tx.resume.update({
       where: { id: resumeId },
       data: {
@@ -98,7 +96,7 @@ export async function PUT(
     await tx.workExperience.deleteMany({ where: { resumeId } });
     if (body.workExperiences.length > 0) {
       await tx.workExperience.createMany({
-        data: body.workExperiences.map((w, i) => ({
+        data: body.workExperiences.map((w) => ({
           resumeId,
           company: w.company,
           title: w.title,
@@ -107,7 +105,6 @@ export async function PUT(
           endDate: w.endDate || null,
           current: w.current,
           description: w.description,
-          sortOrder: i,
         })),
       });
     }
@@ -116,7 +113,7 @@ export async function PUT(
     await tx.education.deleteMany({ where: { resumeId } });
     if (body.educations.length > 0) {
       await tx.education.createMany({
-        data: body.educations.map((e, i) => ({
+        data: body.educations.map((e) => ({
           resumeId,
           institution: e.institution,
           degree: e.degree,
@@ -127,7 +124,6 @@ export async function PUT(
           current: e.current,
           gpa: e.gpa || null,
           description: e.description || null,
-          sortOrder: i,
         })),
       });
     }
@@ -136,10 +132,9 @@ export async function PUT(
     await tx.skill.deleteMany({ where: { resumeId } });
     if (body.skills.length > 0) {
       await tx.skill.createMany({
-        data: body.skills.map((s, i) => ({
+        data: body.skills.map((s) => ({
           resumeId,
           name: s.name,
-          sortOrder: i,
         })),
       });
     }
@@ -148,16 +143,13 @@ export async function PUT(
     await tx.project.deleteMany({ where: { resumeId } });
     if (body.projects.length > 0) {
       await tx.project.createMany({
-        data: body.projects.map((p, i) => ({
+        data: body.projects.map((p) => ({
           resumeId,
           name: p.name,
           description: p.description,
-          technologies: p.technologies,
           url: p.url || null,
-          githubUrl: p.githubUrl || null,
           startDate: p.startDate || null,
           endDate: p.endDate || null,
-          sortOrder: i,
         })),
       });
     }
@@ -166,14 +158,13 @@ export async function PUT(
     await tx.certification.deleteMany({ where: { resumeId } });
     if (body.certifications.length > 0) {
       await tx.certification.createMany({
-        data: body.certifications.map((c, i) => ({
+        data: body.certifications.map((c) => ({
           resumeId,
           name: c.name,
           issuer: c.issuer,
           issueDate: c.issueDate,
           expiryDate: c.expiryDate || null,
-          credentialUrl: c.credentialUrl || null,
-          sortOrder: i,
+          certificateUrl: c.certificateUrl || null,
         })),
       });
     }
@@ -182,11 +173,11 @@ export async function PUT(
       where: { id: resumeId },
       include: {
         personalInfo: true,
-        workExperiences: { orderBy: { sortOrder: "asc" } },
-        educations: { orderBy: { sortOrder: "asc" } },
-        skills: { orderBy: { sortOrder: "asc" } },
-        projects: { orderBy: { sortOrder: "asc" } },
-        certifications: { orderBy: { sortOrder: "asc" } },
+        workExperiences: true,
+        educations: true,
+        skills: true,
+        projects: true,
+        certifications: true,
       },
     });
   });

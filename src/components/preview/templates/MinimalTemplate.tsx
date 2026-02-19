@@ -86,9 +86,7 @@ export function MinimalTemplate({ data }: TemplateProps) {
             <div key={proj.id} className="mb-3">
               <span className="font-medium text-gray-900">{proj.name}</span>
               {proj.description && <p className="text-sm text-gray-600">{proj.description}</p>}
-              {proj.technologies.length > 0 && (
-                <p className="text-xs text-gray-400">{proj.technologies.join(" · ")}</p>
-              )}
+              {proj.url && <p className="text-xs text-gray-400">{proj.url}</p>}
             </div>
           ))}
         </div>

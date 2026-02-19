@@ -98,9 +98,7 @@ export function ClassicTemplate({ data }: TemplateProps) {
             <div key={proj.id} className="mb-3">
               <strong>{proj.name}</strong>
               {proj.description && <p className="text-sm leading-relaxed">{proj.description}</p>}
-              {proj.technologies.length > 0 && (
-                <p className="text-xs italic text-gray-500">{proj.technologies.join(", ")}</p>
-              )}
+              {proj.url && <p className="text-xs italic text-gray-500">{proj.url}</p>}
             </div>
           ))}
         </div>

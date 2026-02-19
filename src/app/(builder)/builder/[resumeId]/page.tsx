@@ -16,11 +16,11 @@ export default async function BuilderPage({
     where: { id: resumeId },
     include: {
       personalInfo: true,
-      workExperiences: { orderBy: { sortOrder: "asc" } },
-      educations: { orderBy: { sortOrder: "asc" } },
-      skills: { orderBy: { sortOrder: "asc" } },
-      projects: { orderBy: { sortOrder: "asc" } },
-      certifications: { orderBy: { sortOrder: "asc" } },
+      workExperiences: true,
+      educations: true,
+      skills: true,
+      projects: true,
+      certifications: true,
     },
   });
 
