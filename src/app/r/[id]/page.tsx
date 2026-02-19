@@ -106,8 +106,7 @@ export default async function PublicResumePage({
     certifications: resume.certifications,
   };
 
-  const Template =
-    TEMPLATE_COMPONENTS[formState.template] ?? ModernTemplate;
+  const Template = TEMPLATE_COMPONENTS[formState.template] ?? ModernTemplate;
 
   const name = resume.personalInfo?.fullName ?? resume.title;
 
@@ -145,7 +144,7 @@ export default async function PublicResumePage({
       </div>
 
       {/* Resume content */}
-      <div className="mx-auto my-8 max-w-[794px] px-4">
+      <div className="mx-auto my-8 max-w-198.5 px-4">
         <div
           className="overflow-hidden rounded-lg bg-white shadow-xl shadow-brand-500/5"
           id="resume-preview"
@@ -154,10 +153,7 @@ export default async function PublicResumePage({
         </div>
         <p className="mt-6 text-center text-xs text-muted-foreground">
           Built with{" "}
-          <Link
-            href="/"
-            className="font-medium text-brand-600 hover:underline"
-          >
+          <Link href="/" className="font-medium text-brand-600 hover:underline">
             BuildMyResume
           </Link>
         </p>

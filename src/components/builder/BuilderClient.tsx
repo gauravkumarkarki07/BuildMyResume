@@ -62,7 +62,7 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
         {/* Left panel — Form editor */}
         <div className="flex w-1/2 shrink-0 flex-col border-r">
           {/* Form panel header */}
-          <div className="shrink-0 border-b px-6 pb-4 pt-5">
+          <div className="shrink-0 px-6 pt-5">
             <h2 className="text-xl font-bold tracking-tight">Build Your Resume</h2>
             <p className="mt-0.5 text-sm text-muted-foreground">
               Fill in your information below and see your resume update in real-time.
@@ -73,7 +73,7 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
               <TemplateSelector />
             </div>
 
-            {/* Section tabs */}
+            {/* Section tabs — has its own border-b */}
             <div className="mt-4">
               <SectionNav />
             </div>

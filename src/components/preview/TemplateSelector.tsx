@@ -17,11 +17,18 @@ export function TemplateSelector() {
   const setTemplate = useResumeStore((s) => s.setTemplate);
 
   return (
-    <div className="flex items-center gap-2">
-      <Palette className="h-4 w-4 text-muted-foreground" />
-      <span className="text-sm font-medium text-muted-foreground">Template</span>
-      <Select value={template} onValueChange={(v) => setTemplate(v as TemplateId)}>
-        <SelectTrigger className="h-8 w-[180px]">
+    <div className="flex items-center justify-between rounded-lg border bg-muted/40 px-4 py-3">
+      <div className="flex items-center gap-3">
+        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+          <Palette className="h-4 w-4 text-primary" />
+        </div>
+        <span className="text-sm font-semibold">Template</span>
+      </div>
+      <Select
+        value={template}
+        onValueChange={(v) => setTemplate(v as TemplateId)}
+      >
+        <SelectTrigger className="h-9 w-[160px] font-medium">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

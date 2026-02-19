@@ -30,7 +30,7 @@ export function SectionNav({ className }: { className?: string }) {
 
   return (
     <nav
-      className={cn("flex items-center gap-1 overflow-x-auto", className)}
+      className={cn("flex items-end gap-0 overflow-x-auto border-b", className)}
       aria-label="Resume sections"
     >
       {SECTIONS.map((section) => {
@@ -42,13 +42,13 @@ export function SectionNav({ className }: { className?: string }) {
             onClick={() => setActiveSection(section.id)}
             aria-current={isActive ? "true" : undefined}
             className={cn(
-              "inline-flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "relative inline-flex shrink-0 items-center gap-1.5 px-3 pb-2.5 pt-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               isActive
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                ? "text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary"
+                : "text-muted-foreground hover:text-foreground"
             )}
           >
-            <Icon className="h-3.5 w-3.5" />
+            <Icon className="h-4 w-4" />
             {section.shortLabel}
           </button>
         );
