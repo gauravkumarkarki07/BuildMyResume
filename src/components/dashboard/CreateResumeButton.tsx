@@ -13,7 +13,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Plus, FileText } from "lucide-react";
+import { Plus } from "lucide-react";
 
 export function CreateResumeButton() {
   const router = useRouter();
@@ -59,9 +59,6 @@ export function CreateResumeButton() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <div className="mx-auto mb-2 rounded-full bg-brand-50 p-3">
-              <FileText className="h-6 w-6 text-brand-600" />
-            </div>
             <DialogTitle className="text-center">Create New Resume</DialogTitle>
             <DialogDescription className="text-center">
               Give your resume a name to get started.

@@ -41,14 +41,12 @@ export function ResumeCard({ resume }: { resume: ResumeWithPersonalInfo }) {
   }
 
   return (
-    <Card className="group overflow-hidden transition-all hover:shadow-lg hover:shadow-brand-500/5">
-      {/* Colored accent bar */}
-      <div className="h-1.5 bg-gradient-to-r from-brand-500 to-brand-400" />
+    <Card className="group overflow-hidden border-l-4 border-l-primary/60 transition-all hover:shadow-md">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div className="flex min-w-0 flex-1 items-start gap-3">
-            <div className="mt-0.5 shrink-0 rounded-lg bg-brand-50 p-2">
-              <FileText className="h-4 w-4 text-brand-600" />
+            <div className="mt-0.5 shrink-0 rounded-lg bg-muted p-2">
+              <FileText className="h-4 w-4 text-primary" />
             </div>
             <div className="min-w-0 flex-1">
               <h3 className="truncate font-semibold">{resume.title}</h3>
@@ -88,6 +86,7 @@ export function ResumeCard({ resume }: { resume: ResumeWithPersonalInfo }) {
               variant="outline"
               size="sm"
               disabled={isDeleting}
+              aria-label="Delete resume"
               className="text-destructive hover:bg-destructive/10 hover:text-destructive"
             >
               <Trash2 className="h-3 w-3" />

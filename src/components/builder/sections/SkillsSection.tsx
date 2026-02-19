@@ -30,7 +30,11 @@ export function SkillsSection() {
         {skills.map((skill) => (
           <Badge key={skill.id} variant="secondary" className="gap-1">
             {skill.name}
-            <button onClick={() => removeSkill(skill.id)} className="hover:text-destructive">
+            <button
+              onClick={() => removeSkill(skill.id)}
+              className="rounded-sm hover:text-destructive focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              aria-label={`Remove ${skill.name}`}
+            >
               <X className="h-3 w-3" />
             </button>
           </Badge>
@@ -39,7 +43,8 @@ export function SkillsSection() {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={skills.length === 0 ? "Type a skill and press Enter" : ""}
+          placeholder="Add a skill…"
+          aria-label="Add skill"
           className="h-auto min-w-[100px] flex-1 border-none p-0 shadow-none focus-visible:ring-0"
         />
       </div>

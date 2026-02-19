@@ -63,6 +63,7 @@ export function ShareDialog({
                 size="icon"
                 onClick={handleCopy}
                 className="shrink-0"
+                aria-label={copied ? "Link copied" : "Copy link"}
               >
                 {copied ? (
                   <Check className="h-4 w-4 text-green-500" />
@@ -74,6 +75,7 @@ export function ShareDialog({
                 variant="outline"
                 size="icon"
                 className="shrink-0"
+                aria-label="Open in new tab"
                 asChild
               >
                 <a href={publicUrl} target="_blank" rel="noopener noreferrer">

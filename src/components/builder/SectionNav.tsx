@@ -29,7 +29,7 @@ export function SectionNav({ className }: { className?: string }) {
   const setActiveSection = useResumeStore((s) => s.setActiveSection);
 
   return (
-    <nav className={cn("flex flex-col gap-1 p-2", className)}>
+    <nav className={cn("flex flex-col gap-1 p-2", className)} aria-label="Resume sections">
       {SECTIONS.map((section) => {
         const Icon = SECTION_ICONS[section.id];
         const isActive = activeSection === section.id;
@@ -37,10 +37,11 @@ export function SectionNav({ className }: { className?: string }) {
           <button
             key={section.id}
             onClick={() => setActiveSection(section.id)}
+            aria-current={isActive ? "true" : undefined}
             className={cn(
-              "flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors",
+              "flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               isActive
-                ? "bg-primary text-primary-foreground"
+                ? "bg-primary/10 font-medium text-primary"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
           >

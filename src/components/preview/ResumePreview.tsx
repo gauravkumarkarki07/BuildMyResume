@@ -24,6 +24,8 @@ export function ResumePreview() {
         className="origin-top bg-white shadow-lg"
         style={{ width: "794px", minHeight: "1123px" }}
         id="resume-preview"
+        role="document"
+        aria-label="Resume preview"
       >
         <Template data={formState} />
       </div>

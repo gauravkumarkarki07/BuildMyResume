@@ -11,23 +11,37 @@ export function SaveStatusIndicator() {
 
   if (isSaving) {
     return (
-      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-        <Loader2 className="h-3 w-3 animate-spin" />
-        Saving...
+      <span
+        className="flex items-center gap-1.5 text-sm text-muted-foreground"
+        role="status"
+        aria-live="polite"
+      >
+        <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+        Saving…
       </span>
     );
   }
 
   if (isDirty) {
     return (
-      <span className="text-xs text-muted-foreground">Unsaved changes</span>
+      <span
+        className="text-sm text-muted-foreground"
+        role="status"
+        aria-live="polite"
+      >
+        Unsaved changes
+      </span>
     );
   }
 
   if (lastSaved) {
     return (
-      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-        <Check className="h-3 w-3" />
+      <span
+        className="flex items-center gap-1.5 text-sm text-muted-foreground"
+        role="status"
+        aria-live="polite"
+      >
+        <Check className="h-3.5 w-3.5" aria-hidden="true" />
         Saved {formatDistanceToNow(lastSaved, { addSuffix: true })}
       </span>
     );

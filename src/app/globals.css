@@ -85,7 +85,7 @@
 
   /* Muted */
   --muted: oklch(0.96 0.012 281);
-  --muted-foreground: oklch(0.52 0.04 281);
+  --muted-foreground: oklch(0.45 0.04 281);
 
   /* Accent */
   --accent: oklch(0.96 0.02 281);

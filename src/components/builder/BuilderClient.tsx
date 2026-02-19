@@ -81,8 +81,9 @@ function ResumeTitle() {
     <input
       value={title}
       onChange={(e) => updateTitle(e.target.value)}
-      className="w-64 border-none bg-transparent text-lg font-bold tracking-tight outline-none placeholder:text-muted-foreground/50 focus:ring-0"
+      className="w-64 rounded border-none bg-transparent text-lg font-bold tracking-tight placeholder:text-muted-foreground/50 hover:border-b hover:border-muted-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       placeholder="Resume title"
+      aria-label="Resume title"
     />
   );
 }

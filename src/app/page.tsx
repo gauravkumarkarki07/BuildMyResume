@@ -42,7 +42,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-6xl px-4 pb-20 pt-24 text-center sm:pb-28 sm:pt-32">
           {/* Badge */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-1.5 text-sm font-medium text-brand-700">
-            <Sparkles className="h-3.5 w-3.5" />
+            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             Free &amp; Open Source Resume Builder
           </div>
 
@@ -76,7 +76,7 @@ export default async function HomePage() {
           {/* Preview mockup */}
           <div className="relative mx-auto mt-16 max-w-4xl">
             <div className="overflow-hidden rounded-xl border bg-card shadow-2xl shadow-brand-500/10">
-              <div className="flex h-10 items-center gap-2 border-b bg-muted/50 px-4">
+              <div className="flex h-10 items-center gap-2 border-b bg-muted/50 px-4" aria-hidden="true">
                 <div className="h-3 w-3 rounded-full bg-red-400" />
                 <div className="h-3 w-3 rounded-full bg-yellow-400" />
                 <div className="h-3 w-3 rounded-full bg-green-400" />
@@ -190,7 +190,7 @@ export default async function HomePage() {
       {/* CTA */}
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-4 text-center">
-          <div className="mx-auto max-w-2xl rounded-2xl bg-gradient-to-br from-brand-600 to-brand-700 px-8 py-14 text-white shadow-xl shadow-brand-600/20">
+          <div className="mx-auto max-w-2xl rounded-2xl bg-gradient-to-br from-brand-600 to-brand-700 px-8 py-14 text-white shadow-lg">
             <h2 className="text-3xl font-bold tracking-tight">
               Ready to build your resume?
             </h2>
@@ -233,14 +233,14 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="rounded-xl border bg-card p-6 transition-shadow hover:shadow-md">
-      <div className="mb-4 inline-flex rounded-lg bg-brand-50 p-2.5">
-        <Icon className="h-5 w-5 text-brand-600" />
+    <article className="rounded-xl border bg-card p-6 transition-shadow hover:shadow-md">
+      <div className="mb-4 inline-flex rounded-lg bg-muted p-2.5">
+        <Icon className="h-5 w-5 text-primary" />
       </div>
       <h3 className="mb-2 font-semibold">{title}</h3>
       <p className="text-sm leading-relaxed text-muted-foreground">
         {description}
       </p>
-    </div>
+    </article>
   );
 }

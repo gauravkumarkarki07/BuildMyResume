@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { useResumeStore } from "@/store/resumeStore";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,11 +15,11 @@ export function PersonalInfoSection() {
       <div className="space-y-3">
         <Field label="Full Name" value={personalInfo.fullName} onChange={(v) => update({ fullName: v })} placeholder="John Doe" />
         <Field label="Email" value={personalInfo.email} onChange={(v) => update({ email: v })} placeholder="john@example.com" type="email" />
-        <Field label="Phone" value={personalInfo.phone} onChange={(v) => update({ phone: v })} placeholder="+1 555 000 0000" />
+        <Field label="Phone" value={personalInfo.phone} onChange={(v) => update({ phone: v })} placeholder="+1 555 000 0000" type="tel" />
         <Field label="Location" value={personalInfo.location} onChange={(v) => update({ location: v })} placeholder="San Francisco, CA" />
-        <Field label="LinkedIn" value={personalInfo.linkedin ?? ""} onChange={(v) => update({ linkedin: v || null })} placeholder="https://linkedin.com/in/..." />
-        <Field label="GitHub" value={personalInfo.github ?? ""} onChange={(v) => update({ github: v || null })} placeholder="https://github.com/..." />
-        <Field label="Website" value={personalInfo.website ?? ""} onChange={(v) => update({ website: v || null })} placeholder="https://..." />
+        <Field label="LinkedIn" value={personalInfo.linkedin ?? ""} onChange={(v) => update({ linkedin: v || null })} placeholder="https://linkedin.com/in/..." type="url" />
+        <Field label="GitHub" value={personalInfo.github ?? ""} onChange={(v) => update({ github: v || null })} placeholder="https://github.com/..." type="url" />
+        <Field label="Website" value={personalInfo.website ?? ""} onChange={(v) => update({ website: v || null })} placeholder="https://..." type="url" />
       </div>
     </div>
   );
@@ -37,10 +38,14 @@ function Field({
   placeholder?: string;
   type?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1">
-      <Label className="text-xs">{label}</Label>
+      <Label htmlFor={id} className="text-xs">
+        {label}
+      </Label>
       <Input
+        id={id}
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}

@@ -33,8 +33,9 @@ export function RepeaterField<T extends { id: string }>({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-2 top-2 h-7 w-7 opacity-0 transition-opacity group-hover:opacity-100"
+            className="absolute right-2 top-2 h-7 w-7 opacity-60 transition-opacity hover:opacity-100 focus-visible:opacity-100"
             onClick={() => onRemove(item.id)}
+            aria-label="Remove entry"
           >
             <Trash2 className="h-3.5 w-3.5 text-destructive" />
           </Button>

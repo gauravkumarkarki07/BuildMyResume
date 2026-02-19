@@ -9,9 +9,9 @@ type ResumeWithPersonalInfo = Resume & { personalInfo: PersonalInfo | null };
 export function ResumeGrid({ resumes }: { resumes: ResumeWithPersonalInfo[] }) {
   if (resumes.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-brand-200 bg-brand-50/30 p-16 text-center">
-        <div className="mb-4 rounded-full bg-brand-100 p-4">
-          <FileText className="h-8 w-8 text-brand-500" />
+      <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-muted-foreground/20 p-16 text-center">
+        <div className="mb-4 rounded-full bg-muted p-4">
+          <FileText className="h-8 w-8 text-muted-foreground" />
         </div>
         <p className="text-lg font-semibold">No resumes yet</p>
         <p className="mt-1 text-sm text-muted-foreground">
