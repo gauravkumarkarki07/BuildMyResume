@@ -1,24 +1,47 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Plus, FileText } from "lucide-react";
 
 export function CreateResumeButton() {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
   const [isCreating, setIsCreating] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (open) {
+      setTitle("");
+      // Small delay to ensure dialog is mounted
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [open]);
 
   async function handleCreate() {
+    const resumeTitle = title.trim() || "Untitled Resume";
     setIsCreating(true);
     try {
       const res = await fetch("/api/resumes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: "Untitled Resume" }),
+        body: JSON.stringify({ title: resumeTitle }),
       });
       if (res.ok) {
         const resume = await res.json();
+        setOpen(false);
         router.push(`/builder/${resume.id}`);
       }
     } finally {
@@ -27,9 +50,59 @@ export function CreateResumeButton() {
   }
 
   return (
-    <Button onClick={handleCreate} disabled={isCreating}>
-      <Plus className="mr-2 h-4 w-4" />
-      {isCreating ? "Creating..." : "New Resume"}
-    </Button>
+    <>
+      <Button onClick={() => setOpen(true)}>
+        <Plus className="mr-2 h-4 w-4" />
+        New Resume
+      </Button>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="mx-auto mb-2 rounded-full bg-brand-50 p-3">
+              <FileText className="h-6 w-6 text-brand-600" />
+            </div>
+            <DialogTitle className="text-center">Create New Resume</DialogTitle>
+            <DialogDescription className="text-center">
+              Give your resume a name to get started.
+            </DialogDescription>
+          </DialogHeader>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleCreate();
+            }}
+            className="space-y-4 py-2"
+          >
+            <div className="space-y-2">
+              <Label htmlFor="resume-title">Resume Name</Label>
+              <Input
+                id="resume-title"
+                ref={inputRef}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g. Software Engineer Resume"
+                disabled={isCreating}
+              />
+            </div>
+
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setOpen(false)}
+                disabled={isCreating}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isCreating}>
+                {isCreating ? "Creating..." : "Create Resume"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

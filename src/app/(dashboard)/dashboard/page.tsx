@@ -14,13 +14,20 @@ export default async function DashboardPage() {
     orderBy: { updatedAt: "desc" },
   });
 
+  const firstName = user.firstName ?? "there";
+
   return (
     <div>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">My Resumes</h1>
+          <h1 className="text-2xl font-bold tracking-tight">
+            Hey {firstName}{" "}
+            <span className="inline-block animate-[wave_1.8s_ease-in-out_infinite]">
+              &#128075;
+            </span>
+          </h1>
           <p className="text-muted-foreground">
-            Create, edit, and manage your resumes
+            Create, edit, and manage your resumes.
           </p>
         </div>
         <CreateResumeButton />

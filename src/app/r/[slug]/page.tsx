@@ -3,9 +3,11 @@ import { db } from "@/lib/db";
 import { ModernTemplate } from "@/components/preview/templates/ModernTemplate";
 import { ClassicTemplate } from "@/components/preview/templates/ClassicTemplate";
 import { MinimalTemplate } from "@/components/preview/templates/MinimalTemplate";
+import { Logo } from "@/components/brand/Logo";
 import type { ResumeFormState } from "@/store/resumeStore";
 import type { TemplateId } from "@/types";
 import type { Metadata } from "next";
+import { Download } from "lucide-react";
 
 const TEMPLATE_COMPONENTS = {
   modern: ModernTemplate,
@@ -44,7 +46,7 @@ export async function generateMetadata({
 
   const name = resume.personalInfo?.fullName ?? resume.title;
   return {
-    title: `${name} — Resume`,
+    title: `${name} — Resume | BuildMyResume`,
     description: resume.summary?.slice(0, 160) ?? `${name}'s resume`,
   };
 }
@@ -96,29 +98,39 @@ export default async function PublicResumePage({
     TEMPLATE_COMPONENTS[formState.template] ?? ModernTemplate;
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-muted/30">
       {/* Top bar */}
-      <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-4 py-3 shadow-sm print:hidden">
-        <div>
-          <h1 className="text-sm font-semibold text-gray-900">
-            {resume.personalInfo?.fullName ?? resume.title}
-          </h1>
-          <p className="text-xs text-gray-500">Resume</p>
+      <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/80 px-6 py-3 backdrop-blur-md print:hidden">
+        <div className="flex items-center gap-4">
+          <Logo size="sm" />
+          <div className="h-6 w-px bg-border" />
+          <div>
+            <h1 className="text-sm font-semibold">
+              {resume.personalInfo?.fullName ?? resume.title}
+            </h1>
+            <p className="text-xs text-muted-foreground">Resume</p>
+          </div>
         </div>
         <button
-          onClick={undefined}
-          className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           id="print-btn"
+          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
+          <Download className="h-4 w-4" />
           Download PDF
         </button>
       </div>
 
       {/* Resume content */}
-      <div className="mx-auto my-8 max-w-[794px]">
-        <div className="bg-white shadow-lg" id="resume-preview">
+      <div className="mx-auto my-8 max-w-[794px] px-4">
+        <div className="overflow-hidden rounded-lg bg-white shadow-xl shadow-brand-500/5" id="resume-preview">
           <Template data={formState} />
         </div>
+        <p className="mt-6 text-center text-xs text-muted-foreground">
+          Built with{" "}
+          <a href="/" className="font-medium text-brand-600 hover:underline">
+            BuildMyResume
+          </a>
+        </p>
       </div>
 
       {/* Print script */}

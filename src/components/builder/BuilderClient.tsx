@@ -13,6 +13,8 @@ import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { ArrowLeft, Save, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/brand/Logo";
+import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 
 export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
@@ -30,11 +32,10 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
       {/* Top bar */}
       <header className="flex h-14 items-center justify-between border-b bg-background px-4">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="/dashboard">
-              <ArrowLeft className="h-4 w-4" />
-            </Link>
-          </Button>
+          <Link href="/dashboard">
+            <Logo size="sm" iconOnly />
+          </Link>
+          <Separator orientation="vertical" className="!h-6" />
           <ResumeTitle />
         </div>
         <div className="flex items-center gap-2">

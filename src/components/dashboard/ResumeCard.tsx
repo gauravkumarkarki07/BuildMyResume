@@ -17,7 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, FileText } from "lucide-react";
 import type { Resume, PersonalInfo } from "@/types";
 
 type ResumeWithPersonalInfo = Resume & { personalInfo: PersonalInfo | null };
@@ -41,40 +41,55 @@ export function ResumeCard({ resume }: { resume: ResumeWithPersonalInfo }) {
   }
 
   return (
-    <Card className="group transition-shadow hover:shadow-md">
+    <Card className="group overflow-hidden transition-all hover:shadow-lg hover:shadow-brand-500/5">
+      {/* Colored accent bar */}
+      <div className="h-1.5 bg-gradient-to-r from-brand-500 to-brand-400" />
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
-          <div className="min-w-0 flex-1">
-            <h3 className="truncate font-semibold">{resume.title}</h3>
-            {resume.personalInfo?.fullName && (
-              <p className="truncate text-sm text-muted-foreground">
-                {resume.personalInfo.fullName}
-              </p>
-            )}
+          <div className="flex min-w-0 flex-1 items-start gap-3">
+            <div className="mt-0.5 shrink-0 rounded-lg bg-brand-50 p-2">
+              <FileText className="h-4 w-4 text-brand-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="truncate font-semibold">{resume.title}</h3>
+              {resume.personalInfo?.fullName && (
+                <p className="truncate text-sm text-muted-foreground">
+                  {resume.personalInfo.fullName}
+                </p>
+              )}
+            </div>
           </div>
-          <Badge variant="secondary" className="ml-2 capitalize">
+          <Badge variant="secondary" className="ml-2 shrink-0 capitalize">
             {resume.template}
           </Badge>
         </div>
       </CardHeader>
       <CardContent className="pb-2">
         <p className="text-xs text-muted-foreground">
-          Updated {formatDistanceToNow(new Date(resume.updatedAt), { addSuffix: true })}
+          Updated{" "}
+          {formatDistanceToNow(new Date(resume.updatedAt), {
+            addSuffix: true,
+          })}
         </p>
       </CardContent>
       <CardFooter className="gap-2">
         <Button
-          variant="outline"
+          variant="default"
           size="sm"
           className="flex-1"
           onClick={() => router.push(`/builder/${resume.id}`)}
         >
-          <Pencil className="mr-1 h-3 w-3" />
+          <Pencil className="mr-1.5 h-3 w-3" />
           Edit
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="outline" size="sm" disabled={isDeleting}>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={isDeleting}
+              className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+            >
               <Trash2 className="h-3 w-3" />
             </Button>
           </AlertDialogTrigger>
@@ -88,7 +103,10 @@ export function ResumeCard({ resume }: { resume: ResumeWithPersonalInfo }) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete}>
+              <AlertDialogAction
+                onClick={handleDelete}
+                className="bg-destructive text-white hover:bg-destructive/90"
+              >
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>
