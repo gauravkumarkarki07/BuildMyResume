@@ -20,7 +20,7 @@ export type {
 };
 
 // Template options matching the Resume.template field
-export type TemplateId = "modern" | "classic" | "minimal";
+export type TemplateId = "modern" | "classic" | "minimal" | "professional" | "executive" | "creative";
 
 // Resume with all relations loaded (what the builder works with)
 export type ResumeWithRelations = Resume & {

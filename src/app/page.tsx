@@ -10,6 +10,7 @@ import {
   Share2,
   Sparkles,
   Shield,
+  CheckCircle2,
 } from "lucide-react";
 
 export default async function HomePage() {
@@ -37,7 +38,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         {/* Gradient background */}
         <div className="absolute inset-0 -z-10 bg-linear-to-b from-brand-50 via-background to-background" />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_-20%,oklch(0.78_0.11_281/0.15),transparent)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_-20%,oklch(0.78_0.08_155/0.15),transparent)]" />
 
         <div className="mx-auto max-w-6xl px-4 pb-20 pt-24 text-center sm:pb-28 sm:pt-32">
           {/* Badge */}
@@ -48,7 +49,7 @@ export default async function HomePage() {
 
           <h1 className="mx-auto max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
             Build a resume that
-            <span className="bg-linear-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-brand-700 via-brand-500 to-brand-400 bg-clip-text text-transparent">
               {" "}
               gets you hired
             </span>
@@ -71,6 +72,21 @@ export default async function HomePage() {
             >
               <Link href="/sign-in">Sign In</Link>
             </Button>
+          </div>
+
+          {/* Trust indicators */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            {[
+              "100% Free",
+              "No Watermarks",
+              "ATS-Friendly",
+              "6 Templates",
+            ].map((item) => (
+              <span key={item} className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="h-3.5 w-3.5 text-brand-500" aria-hidden="true" />
+                {item}
+              </span>
+            ))}
           </div>
 
           {/* Preview mockup */}
@@ -157,31 +173,43 @@ export default async function HomePage() {
               icon={FileText}
               title="Smart Builder"
               description="Intuitive form-based editor with live preview. Fill in sections and see your resume take shape in real time."
+              iconBg="bg-emerald-50"
+              iconColor="text-emerald-600"
             />
             <FeatureCard
               icon={Palette}
-              title="Multiple Templates"
-              description="Choose from Modern, Classic, and Minimal templates. Switch between them instantly to find your style."
+              title="6 Templates"
+              description="Choose from Modern, Classic, Minimal, Professional, Executive, and Creative templates. Switch instantly."
+              iconBg="bg-violet-50"
+              iconColor="text-violet-600"
             />
             <FeatureCard
               icon={Download}
               title="PDF Export"
               description="Download your resume as a clean, print-ready PDF. Formatted perfectly for A4 paper."
+              iconBg="bg-amber-50"
+              iconColor="text-amber-600"
             />
             <FeatureCard
               icon={Share2}
               title="Shareable Link"
               description="Generate a public link to your resume. Share it with recruiters or add it to your portfolio."
+              iconBg="bg-rose-50"
+              iconColor="text-rose-600"
             />
             <FeatureCard
               icon={Sparkles}
               title="Auto-Save"
               description="Never lose your work. Changes are automatically saved as you type with visual status indicators."
+              iconBg="bg-sky-50"
+              iconColor="text-sky-600"
             />
             <FeatureCard
               icon={Shield}
               title="Secure & Private"
               description="Your data is protected with Clerk authentication. Resumes are private by default."
+              iconBg="bg-teal-50"
+              iconColor="text-teal-600"
             />
           </div>
         </div>
@@ -211,8 +239,12 @@ export default async function HomePage() {
 
       {/* Footer */}
       <footer className="border-t py-8">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row">
           <Logo size="sm" />
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+          </div>
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} BuildMyResume. All rights
             reserved.
@@ -227,15 +259,19 @@ function FeatureCard({
   icon: Icon,
   title,
   description,
+  iconBg = "bg-muted",
+  iconColor = "text-primary",
 }: {
   icon: React.ElementType;
   title: string;
   description: string;
+  iconBg?: string;
+  iconColor?: string;
 }) {
   return (
-    <article className="rounded-xl border bg-card p-6 transition-shadow hover:shadow-md">
-      <div className="mb-4 inline-flex rounded-lg bg-muted p-2.5">
-        <Icon className="h-5 w-5 text-primary" />
+    <article className="rounded-xl border bg-card p-6 transition-all hover:-translate-y-0.5 hover:shadow-md">
+      <div className={`mb-4 inline-flex rounded-lg p-2.5 ${iconBg}`}>
+        <Icon className={`h-5 w-5 ${iconColor}`} />
       </div>
       <h3 className="mb-2 font-semibold">{title}</h3>
       <p className="text-sm leading-relaxed text-muted-foreground">

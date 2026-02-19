@@ -1,33 +1,44 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { ensureUserInDb } from "@/lib/auth";
+import { generateResumePdf } from "@/lib/pdf";
 
-// POST /api/resumes/[resumeId]/export — generate PDF
-// Currently uses client-side print-to-PDF. This endpoint exists as a
-// placeholder for future server-side PDF generation via Puppeteer.
-export async function POST(
+// GET /api/resumes/[resumeId]/export — generate and download PDF
+export async function GET(
   _req: Request,
   { params }: { params: Promise<{ resumeId: string }> }
 ) {
   const { resumeId } = await params;
-  const user = await ensureUserInDb();
-  if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
 
   const resume = await db.resume.findUnique({
     where: { id: resumeId },
-    select: { id: true, userId: true },
+    select: { id: true, title: true },
   });
 
-  if (!resume || resume.userId !== user.id) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  if (!resume) {
+    return NextResponse.json({ error: "Resume not found" }, { status: 404 });
   }
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const pdfUrl = `${appUrl}/r/${resume.id}?pdf=1`;
 
-  return NextResponse.json({
-    message: "Use client-side Export PDF button or print the public page.",
-    publicUrl: `${appUrl}/r/${resume.id}`,
-  });
+  try {
+    const pdfBuffer = await generateResumePdf(pdfUrl);
+
+    const safeTitle = resume.title.replace(/[^a-zA-Z0-9 _-]/g, "").trim() || "resume";
+
+    return new Response(pdfBuffer.buffer as ArrayBuffer, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `attachment; filename="${safeTitle}.pdf"`,
+        "Content-Length": String(pdfBuffer.byteLength),
+      },
+    });
+  } catch (error) {
+    console.error("PDF generation failed:", error);
+    return NextResponse.json(
+      { error: "Failed to generate PDF. Please try again." },
+      { status: 500 }
+    );
+  }
 }

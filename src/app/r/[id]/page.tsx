@@ -3,17 +3,23 @@ import { db } from "@/lib/db";
 import { ModernTemplate } from "@/components/preview/templates/ModernTemplate";
 import { ClassicTemplate } from "@/components/preview/templates/ClassicTemplate";
 import { MinimalTemplate } from "@/components/preview/templates/MinimalTemplate";
+import { ProfessionalTemplate } from "@/components/preview/templates/ProfessionalTemplate";
+import { ExecutiveTemplate } from "@/components/preview/templates/ExecutiveTemplate";
+import { CreativeTemplate } from "@/components/preview/templates/CreativeTemplate";
 import { Logo } from "@/components/brand/Logo";
+import { DownloadPdfButton } from "@/components/shared/DownloadPdfButton";
 import type { ResumeFormState } from "@/store/resumeStore";
 import type { TemplateId } from "@/types";
 import type { Metadata } from "next";
-import { Download } from "lucide-react";
 import Link from "next/link";
 
 const TEMPLATE_COMPONENTS = {
   modern: ModernTemplate,
   classic: ClassicTemplate,
   minimal: MinimalTemplate,
+  professional: ProfessionalTemplate,
+  executive: ExecutiveTemplate,
+  creative: CreativeTemplate,
 } as const;
 
 async function getPublicResume(id: string) {
@@ -54,13 +60,18 @@ export async function generateMetadata({
 
 export default async function PublicResumePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ pdf?: string }>;
 }) {
   const { id } = await params;
+  const { pdf } = await searchParams;
   const resume = await getPublicResume(id);
 
   if (!resume) notFound();
+
+  const isPdfMode = pdf === "1";
 
   const emptyPersonalInfo = {
     fullName: "",
@@ -98,6 +109,26 @@ export default async function PublicResumePage({
   const Template =
     TEMPLATE_COMPONENTS[formState.template] ?? ModernTemplate;
 
+  const name = resume.personalInfo?.fullName ?? resume.title;
+
+  // PDF mode: render only the resume template on a clean white page
+  if (isPdfMode) {
+    return (
+      <div
+        style={{
+          width: "794px",
+          minHeight: "1123px",
+          margin: 0,
+          padding: 0,
+          background: "white",
+        }}
+        id="resume-preview"
+      >
+        <Template data={formState} />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-muted/30">
       {/* Top bar */}
@@ -106,44 +137,31 @@ export default async function PublicResumePage({
           <Logo size="sm" />
           <div className="h-6 w-px bg-border" />
           <div>
-            <h1 className="text-sm font-semibold">
-              {resume.personalInfo?.fullName ?? resume.title}
-            </h1>
+            <h1 className="text-sm font-semibold">{name}</h1>
             <p className="text-xs text-muted-foreground">Resume</p>
           </div>
         </div>
-        <button
-          id="print-btn"
-          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-        >
-          <Download className="h-4 w-4" />
-          Download PDF
-        </button>
+        <DownloadPdfButton resumeId={id} title={name} />
       </div>
 
       {/* Resume content */}
       <div className="mx-auto my-8 max-w-[794px] px-4">
-        <div className="overflow-hidden rounded-lg bg-white shadow-xl shadow-brand-500/5" id="resume-preview">
+        <div
+          className="overflow-hidden rounded-lg bg-white shadow-xl shadow-brand-500/5"
+          id="resume-preview"
+        >
           <Template data={formState} />
         </div>
         <p className="mt-6 text-center text-xs text-muted-foreground">
           Built with{" "}
-          <Link href="/" className="font-medium text-brand-600 hover:underline">
+          <Link
+            href="/"
+            className="font-medium text-brand-600 hover:underline"
+          >
             BuildMyResume
           </Link>
         </p>
       </div>
-
-      {/* Print script */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            document.getElementById('print-btn')?.addEventListener('click', function() {
-              window.print();
-            });
-          `,
-        }}
-      />
     </div>
   );
 }

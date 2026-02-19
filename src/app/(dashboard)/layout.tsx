@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="min-h-screen bg-muted/30">
-      <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b bg-background/80 shadow-sm backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           <Link href="/dashboard">
             <Logo size="md" />

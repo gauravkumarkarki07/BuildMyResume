@@ -8,10 +8,11 @@ import { BuilderSidebar } from "./BuilderSidebar";
 import { ResumePreview } from "@/components/preview/ResumePreview";
 import { SaveStatusIndicator } from "./SaveStatusIndicator";
 import { ShareDialog } from "./ShareDialog";
+import { DownloadPdfButton } from "@/components/shared/DownloadPdfButton";
 import type { ResumeWithRelations } from "@/types";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
-import { Save, Download, Share2 } from "lucide-react";
+import { Save, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/Logo";
 import { Separator } from "@/components/ui/separator";
@@ -30,7 +31,7 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
   return (
     <div className="flex h-screen flex-col overflow-hidden">
       {/* Top bar */}
-      <header className="flex h-14 items-center justify-between border-b bg-background px-4">
+      <header className="flex h-14 items-center justify-between border-b bg-background px-4 shadow-sm">
         <div className="flex items-center gap-3">
           <Link href="/dashboard">
             <Logo size="sm" iconOnly />
@@ -50,7 +51,7 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
             <Share2 className="h-3.5 w-3.5" />
             Share
           </Button>
-          <ExportButton />
+          <ExportButton resumeId={resume.id} />
           <UserButton afterSignOutUrl="/" />
         </div>
       </header>
@@ -133,80 +134,7 @@ function ManualSaveButton({ resumeId }: { resumeId: string }) {
   );
 }
 
-function ExportButton() {
-  const handleExport = useCallback(() => {
-    const previewEl = document.getElementById("resume-preview");
-    if (!previewEl) return;
-
-    const printWindow = window.open("", "_blank");
-    if (!printWindow) {
-      toast.error("Please allow pop-ups to download your resume");
-      return;
-    }
-
-    const styles = Array.from(document.styleSheets)
-      .map((sheet) => {
-        try {
-          return Array.from(sheet.cssRules)
-            .map((rule) => rule.cssText)
-            .join("\n");
-        } catch {
-          // Cross-origin stylesheets can't be read
-          return "";
-        }
-      })
-      .join("\n");
-
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Resume</title>
-          <style>
-            ${styles}
-            @page {
-              size: A4;
-              margin: 0;
-            }
-            body {
-              margin: 0;
-              padding: 0;
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
-            }
-            #resume-content {
-              width: 794px;
-              min-height: 1123px;
-              margin: 0 auto;
-              background: white;
-            }
-          </style>
-        </head>
-        <body>
-          <div id="resume-content">${previewEl.innerHTML}</div>
-          <script>
-            window.onload = function() {
-              setTimeout(function() {
-                window.print();
-                window.onafterprint = function() { window.close(); };
-              }, 250);
-            };
-          <\/script>
-        </body>
-      </html>
-    `);
-    printWindow.document.close();
-  }, []);
-
-  return (
-    <Button
-      variant="default"
-      size="sm"
-      className="gap-1.5"
-      onClick={handleExport}
-    >
-      <Download className="h-3.5 w-3.5" />
-      Export PDF
-    </Button>
-  );
+function ExportButton({ resumeId }: { resumeId: string }) {
+  const title = useResumeStore((s) => s.formState.title);
+  return <DownloadPdfButton resumeId={resumeId} title={title} />;
 }

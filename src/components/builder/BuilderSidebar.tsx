@@ -2,6 +2,7 @@
 
 import { useResumeStore } from "@/store/resumeStore";
 import { cn } from "@/lib/utils";
+import { SECTIONS } from "@/lib/constants";
 import { PersonalInfoSection } from "./sections/PersonalInfoSection";
 import { SummarySection } from "./sections/SummarySection";
 import { WorkExperienceSection } from "./sections/WorkExperienceSection";
@@ -12,9 +13,11 @@ import { CertificationsSection } from "./sections/CertificationsSection";
 
 export function BuilderSidebar({ className }: { className?: string }) {
   const activeSection = useResumeStore((s) => s.activeSection);
+  const sectionLabel = SECTIONS.find((s) => s.id === activeSection)?.label ?? "";
 
   return (
     <div className={cn(className)}>
+      <h2 className="mb-4 text-lg font-semibold tracking-tight">{sectionLabel}</h2>
       {activeSection === "personal" && <PersonalInfoSection />}
       {activeSection === "summary" && <SummarySection />}
       {activeSection === "experience" && <WorkExperienceSection />}

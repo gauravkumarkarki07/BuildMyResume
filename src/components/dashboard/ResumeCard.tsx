@@ -41,7 +41,7 @@ export function ResumeCard({ resume }: { resume: ResumeWithPersonalInfo }) {
   }
 
   return (
-    <Card className="group overflow-hidden border-l-4 border-l-primary/60 transition-all hover:shadow-md">
+    <Card className="group overflow-hidden border-l-4 border-l-primary/60 transition-all hover:-translate-y-0.5 hover:shadow-md">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div className="flex min-w-0 flex-1 items-start gap-3">

@@ -14,6 +14,9 @@ export const TEMPLATES: { id: TemplateId; label: string; description: string }[]
   { id: "modern", label: "Modern", description: "Bold header, colored accents" },
   { id: "classic", label: "Classic", description: "Traditional single-column" },
   { id: "minimal", label: "Minimal", description: "Clean whitespace, subtle style" },
+  { id: "professional", label: "Professional", description: "ATS-optimized, no-frills" },
+  { id: "executive", label: "Executive", description: "Two-column sidebar layout" },
+  { id: "creative", label: "Creative", description: "Bold typography, warm accents" },
 ];
 
 export const AUTOSAVE_DELAY_MS = 1500;

@@ -5,12 +5,18 @@ import { TemplateSelector } from "./TemplateSelector";
 import { ModernTemplate } from "./templates/ModernTemplate";
 import { ClassicTemplate } from "./templates/ClassicTemplate";
 import { MinimalTemplate } from "./templates/MinimalTemplate";
+import { ProfessionalTemplate } from "./templates/ProfessionalTemplate";
+import { ExecutiveTemplate } from "./templates/ExecutiveTemplate";
+import { CreativeTemplate } from "./templates/CreativeTemplate";
 import type { ResumeFormState } from "@/store/resumeStore";
 
 const TEMPLATE_COMPONENTS = {
   modern: ModernTemplate,
   classic: ClassicTemplate,
   minimal: MinimalTemplate,
+  professional: ProfessionalTemplate,
+  executive: ExecutiveTemplate,
+  creative: CreativeTemplate,
 } as const;
 
 export function ResumePreview() {
