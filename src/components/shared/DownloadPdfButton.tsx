@@ -61,6 +61,7 @@ export function DownloadPdfButton({
       className="gap-1.5"
       onClick={handleDownload}
       disabled={isGenerating}
+      aria-label={isGenerating ? "Generating PDF…" : "Export PDF"}
     >
       {isGenerating ? (
         <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />

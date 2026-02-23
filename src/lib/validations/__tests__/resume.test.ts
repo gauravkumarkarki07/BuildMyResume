@@ -437,8 +437,8 @@ describe("resumeFormSchema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("accepts all three valid templates", () => {
-    for (const template of ["modern", "classic", "minimal"] as const) {
+  it("accepts all six valid templates", () => {
+    for (const template of ["modern", "classic", "minimal", "professional", "executive", "creative"] as const) {
       const result = resumeFormSchema.safeParse({ ...validResume, template });
       expect(result.success).toBe(true);
     }
