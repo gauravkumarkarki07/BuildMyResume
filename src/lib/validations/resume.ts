@@ -59,7 +59,7 @@ export const certificationSchema = z.object({
 
 export const resumeFormSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  template: z.enum(["modern", "classic", "minimal"]),
+  template: z.enum(["modern", "classic", "minimal", "professional", "executive", "creative"]),
   summary: z.string(),
   personalInfo: personalInfoSchema,
   workExperiences: z.array(workExperienceSchema),

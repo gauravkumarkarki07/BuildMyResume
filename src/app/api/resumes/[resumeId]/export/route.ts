@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { ensureUserInDb } from "@/lib/auth";
 import { generateResumePdf } from "@/lib/pdf";
 
 // GET /api/resumes/[resumeId]/export — generate and download PDF
@@ -9,12 +10,17 @@ export async function GET(
 ) {
   const { resumeId } = await params;
 
+  const user = await ensureUserInDb();
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const resume = await db.resume.findUnique({
     where: { id: resumeId },
-    select: { id: true, title: true },
+    select: { id: true, title: true, userId: true },
   });
 
-  if (!resume) {
+  if (!resume || resume.userId !== user.id) {
     return NextResponse.json({ error: "Resume not found" }, { status: 404 });
   }
 

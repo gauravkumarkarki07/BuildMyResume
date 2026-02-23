@@ -72,6 +72,7 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
       <div className="flex shrink-0 border-b bg-muted/30 md:hidden">
         <button
           onClick={() => setMobilePanel("edit")}
+          aria-pressed={mobilePanel === "edit"}
           className={`flex flex-1 items-center justify-center gap-2 py-2.5 text-sm font-medium transition-colors ${
             mobilePanel === "edit"
               ? "border-b-2 border-primary bg-background text-primary"
@@ -83,6 +84,7 @@ export function BuilderClient({ resume }: { resume: ResumeWithRelations }) {
         </button>
         <button
           onClick={() => setMobilePanel("preview")}
+          aria-pressed={mobilePanel === "preview"}
           className={`flex flex-1 items-center justify-center gap-2 py-2.5 text-sm font-medium transition-colors ${
             mobilePanel === "preview"
               ? "border-b-2 border-primary bg-background text-primary"

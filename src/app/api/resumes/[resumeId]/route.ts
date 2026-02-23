@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { ensureUserInDb } from "@/lib/auth";
-import type { ResumeFormState } from "@/store/resumeStore";
+import { resumeFormSchema } from "@/lib/validations/resume";
 
 async function getOwnedResume(resumeId: string, userId: string) {
   const resume = await db.resume.findUnique({
@@ -54,7 +54,15 @@ export async function PUT(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  const body: ResumeFormState = await req.json();
+  const rawBody = await req.json().catch(() => null);
+  if (!rawBody) {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+  const parsed = resumeFormSchema.safeParse(rawBody);
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid request body", details: parsed.error.flatten() }, { status: 400 });
+  }
+  const body = parsed.data;
 
   const updated = await db.$transaction(async (tx) => {
     await tx.resume.update({
